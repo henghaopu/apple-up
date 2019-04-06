@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
+import AppleEditing from './components/AppleEditing'
 
 Vue.use(Router)
 
@@ -10,6 +11,11 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home
+    },
+    {
+      path: '/apple-editing',
+      name: ' apple-editing',
+      component: AppleEditing
     },
     {
       path: '/about',
