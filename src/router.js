@@ -14,7 +14,7 @@ export default new Router({
     },
     {
       path: '/apple-editing',
-      name: ' apple-editing',
+      name: 'apple-editing',
       component: AppleEditing
     },
     {
