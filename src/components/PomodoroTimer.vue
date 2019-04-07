@@ -159,6 +159,7 @@ export default {
   // background-image: url("../assets/background.svg");
 }
 .background > a {
+  color: #000000;
   position: absolute;
   left: 0px;
   top: 0px;
@@ -169,9 +170,16 @@ export default {
   padding: 15px;
   text-decoration: none;
 }
+.background > a:hover {
+  color: green;
+}
+.background > a:active {
+  color: orange;
+}
 // .background > a:link, .background > a:visited {
-//   color: green;
+//   color: #b43b42;
 // }
+
 .record {
   position: absolute;
   right: 0px;
