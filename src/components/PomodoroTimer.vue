@@ -81,25 +81,21 @@ export default {
     startTimer () {
       let self = this
       let now = Math.floor(Date.now() * 0.001)
-      this.timeout = setTimeout(function cb () {
-        let countUp = Math.floor(Date.now() * 0.001) - now
-        self.remainingTime = defaultTotalTimeInSecond - countUp
-        self.remainingMinute = Math.floor(self.remainingTime / 60)
-        self.remainingSecond = self.remainingTime % 60
-        if (self.remainingTime === 0) {
-          clearTimeout(this.timeout)
-        } else {
-          setTimeout(cb, 1000)
-        }
-        
-      // // animate
-      // if (this.remainingTime <= 5) {
-      //   // eslint-disable-next-line
-      //   console.log('test')
-      //   this.fiveSecondAnimation(this.remainingTime)
-      // }
+      // set a condition to avoid triggering multiple times
+      if (self.remainingTime === defaultTotalTimeInSecond) {
+        this.timeout = setTimeout(function cb () {
+          let countUp = Math.floor(Date.now() * 0.001) - now
+          self.remainingTime = defaultTotalTimeInSecond - countUp
+          self.remainingMinute = Math.floor(self.remainingTime / 60)
+          self.remainingSecond = self.remainingTime % 60
+          if (self.remainingTime === 0) {
+            clearTimeout(this.timeout)
+          } else {
+            setTimeout(cb, 1000)
+          }
 
-      }, 1000)
+        }, 1000)
+      }
     },
     // fiveSecondAnimation (second) {
     //   switch (second) {
@@ -326,11 +322,20 @@ export default {
   }  
 
   .basket-container {
-    position: absolute;
-    bottom: 10%; 
-    left: 60%;
+    bottom: 10%;   
+    left: 60%;      
   }
-  .basket-container > a > img {
+  .basket-container-loca2 {
+    bottom: 10%; 
+    left: 68%;
+  }
+  .basket-container-loca3 {
+    bottom: 5%; 
+    left: 65%;
+  }
+  .basket-container > a > img,
+  .basket-container-loca2 > a > img,
+  .basket-container-loca3 > a > img {
     width: 140px;
   }
 }
