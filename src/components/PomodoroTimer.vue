@@ -91,7 +91,7 @@ export default {
           if (self.remainingTime === 0) {
             clearTimeout(this.timeout)
           } else {
-            setTimeout(cb, 1000)
+            self.timeout = setTimeout(cb, 1000)
           }
 
         }, 1000)
@@ -134,7 +134,7 @@ export default {
       // this.defaultTotalTimeInSecond = 0
       this.remainingTime = 0
       // *** doesn't work
-      // clearTimeout(this.timeout)
+      clearTimeout(this.timeout)
     }
   }
 }
