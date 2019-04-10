@@ -151,15 +151,18 @@ export default {
       this.remainingTime = 300
     },
     toZero () {
-      if (this.isStudyTime) {
-        this.isStudyTime = false
-      } else {
-        this.isStudyTime = true
+      // only work when counting is still proceeding
+      if (this.remainingTime !== 0 && this.remainingTime !== defaultTotalTimeInSecond) {
+        if (this.isStudyTime) {
+          this.isStudyTime = false
+        } else {
+          this.isStudyTime = true
+        }
+        // this.defaultTotalTimeInSecond = 0
+        this.remainingTime = 0
+        // *** doesn't work
+        clearTimeout(this.timeout)
       }
-      // this.defaultTotalTimeInSecond = 0
-      this.remainingTime = 0
-      // *** doesn't work
-      clearTimeout(this.timeout)
     },
     setUpStudyTime () {
       if (this.remainingTime === 0 && this.isStudyTime) {
