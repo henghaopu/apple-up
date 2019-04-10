@@ -14,8 +14,13 @@
       <!-- <a href="" v-if="remainingTime === 5 || remainingTime === 4"><img src="../assets/apple-15-minute.svg" alt="" :width="appleSize"></a>
       <a href="" v-if="remainingTime === 3 || remainingTime === 2"><img src="../assets/apple-20-minute.svg" alt="" :width="appleSize"></a> -->
       <!-- <a href="" v-if="remainingTime === 1 || remainingTime === 0"><img src="../assets/apple-25-minute.svg" alt="" :width="appleSize"></a> -->
-      <a v-if="remainingTime === 1 || remainingTime === 0" @click="addOne"><img src="../assets/apple-25-minute.svg" alt=""></a>
+      <a v-if="(remainingTime === 1 || remainingTime === 0) && (isStudyTime === false)" @click="addOne"><img src="../assets/apple-25-minute.svg" alt=""></a>
     </section>
+
+    <!-- <section class="bubble-container">
+      <img src="../assets/talk-bubble.svg" alt="">
+    </section> -->
+
     <!-- <div class="tree-shape"></div> -->
     <section class="basket-container">
       <!-- <a href=""><img src="../assets/basket.svg" alt=""></a> -->
@@ -29,7 +34,7 @@
     </section>
 
 
-    <section class="time-container">
+    <section class="time-container" @click="setUpStudyTime">
       <time>{{remainingMinuteWithTwoDigit}}</time>
       <span>:</span>
       <time>{{remainingSecondWithTwoDigit}}</time>
@@ -48,6 +53,7 @@ export default {
   name: 'PomodoroTimer',
   data() {
     return {
+      isStudyTime: true,
       // defaultTotalTimeInSecond: 1500,
       remainingTime: defaultTotalTimeInSecond,
       remainingMinute: null,
@@ -79,6 +85,13 @@ export default {
   },
   methods: {
     startTimer () {
+      // if (this.isStudyTime) {
+      //   defaultTotalTimeInSecond = 1500
+      //   this.remainingTime = 1500
+      // } else {
+      //   defaultTotalTimeInSecond = 300
+      //   this.remainingTime = 300
+      // }
       let self = this
       let now = Math.floor(Date.now() * 0.001)
       // set a condition to avoid triggering multiple times
@@ -89,11 +102,18 @@ export default {
           self.remainingMinute = Math.floor(self.remainingTime / 60)
           self.remainingSecond = self.remainingTime % 60
           if (self.remainingTime === 0) {
+            // take turn between studying and resting time
+            if (this.isStudyTime) {
+              this.isStudyTime = false
+            } else {
+              this.isStudyTime = true
+            }
+            // stop the timer
             clearTimeout(this.timeout)
           } else {
+            // keep counting down
             self.timeout = setTimeout(cb, 1000)
           }
-
         }, 1000)
       }
     },
@@ -131,10 +151,21 @@ export default {
       this.remainingTime = 300
     },
     toZero () {
+      if (this.isStudyTime) {
+        this.isStudyTime = false
+      } else {
+        this.isStudyTime = true
+      }
       // this.defaultTotalTimeInSecond = 0
       this.remainingTime = 0
       // *** doesn't work
       clearTimeout(this.timeout)
+    },
+    setUpStudyTime () {
+      if (this.remainingTime === 0 && this.isStudyTime) {
+        defaultTotalTimeInSecond = 1500
+        this.remainingTime = 1500
+      }
     }
   }
 }
@@ -237,20 +268,28 @@ export default {
 // }
 // @keyframes growing-apple {
 // }
+.bubble-container {
+  position: absolute;
+  bottom: 55vh;
+  left: 52%;
+}
+.bubble-container > img {
+  width: 160px;
+}
 .basket-container {
   position: absolute;
   bottom: 90px; 
-  right: 50px;
+  left: 55%;
 }
 .basket-container-loca2 {
   position: absolute;
-  bottom: 70px; 
-  right: 30px;
+  bottom: 85px; 
+  left: 72%;
 }
 .basket-container-loca3 {
   position: absolute;
-  bottom: 65px; 
-  right: 70px;
+  bottom: 70px; 
+  left: 63%;
 }
 .basket-container > a > img,
 .basket-container-loca2 > a > img,
@@ -290,6 +329,10 @@ export default {
     width: 360px;
     margin: 0 auto;
   }
+  .bubble-container {
+    bottom: 55vh;
+    left: 55%;
+  }
 }
 
 @media screen and (min-width: 425px) {
@@ -301,6 +344,21 @@ export default {
   }
   .time-container {
     font-size: 32px;
+  }
+  .bubble-container > img {
+    width: 200px;
+  }
+  .basket-container {
+    bottom: 90px; 
+    left: 65%;
+  }
+  .basket-container-loca2 {
+    bottom: 85px; 
+    left: 75%;
+  }
+  .basket-container-loca3 {
+    bottom: 70px; 
+    left: 70%;
   }
 }
 
@@ -320,18 +378,25 @@ export default {
   .apple-container > a > img {
     width: 75px;
   }  
-
+  .bubble-container {
+    position: absolute;
+    bottom: 52vh;
+    left: 60%;
+  }
+  .bubble-container > img {
+    width: 360px;
+  } 
   .basket-container {
     bottom: 10%;   
-    left: 60%;      
+    left: 62%;      
   }
   .basket-container-loca2 {
-    bottom: 10%; 
-    left: 68%;
+    bottom: 8%; 
+    left: 71%;
   }
   .basket-container-loca3 {
     bottom: 5%; 
-    left: 65%;
+    left: 66%;
   }
   .basket-container > a > img,
   .basket-container-loca2 > a > img,
